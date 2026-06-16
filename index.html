@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Abschnitte der Wirbelsäule</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Segoe UI,sans-serif;
+    background:linear-gradient(to bottom,#edf3f8,#dfe9f2);
+    color:#163457;
+}
+
+h1{
+    text-align:center;
+    font-size:3rem;
+    margin-top:25px;
+}
+
+.subtitle{
+    text-align:center;
+    font-size:1.3rem;
+    margin-bottom:30px;
+}
+
+.main{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.sheet{
+    width:820px;
+    background:white;
+    border-radius:30px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+.spine-container{
+    position:relative;
+    height:1550px;
+}
+
+.spine-image{
+    position:absolute;
+    left:10px;
+    top:20px;
+    height:1200px;
+}
+
+/* Markierungsflächen */
+
+.zone{
+    position:absolute;
+    left:40px;
+    width:220px;
+    cursor:pointer;
+    border-radius:20px;
+    opacity:0.45;
+}
+
+.zone1{
+    top:25px;
+    height:190px;
+}
+
+.zone2{
+    top:215px;
+    height:520px;
+}
+
+.zone3{
+    top:735px;
+    height:250px;
+}
+
+.zone4{
+    top:985px;
+    height:250px;
+}
+
+.zone5{
+    top:1235px;
+    height:140px;
+}
+
+/* Linien */
+
+.line{
+    position:absolute;
+    left:390px;
+    width:70px;
+    border-top:3px solid #555;
+}
+
+.l1{ top:120px; }
+.l2{ top:500px; }
+.l3{ top:860px; }
+.l4{ top:1110px; }
+.l5{ top:1300px; }
+
+/* Ablagefelder */
+
+.dropzone{
+    position:absolute;
+    right:40px;
+    width:230px;
+    height:80px;
+    border:3px dashed #c7c7c7;
+    border-radius:20px;
+    background:#fafafa;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+.d1{ top:80px; }
+.d2{ top:460px; }
+.d3{ top:820px; }
+.d4{ top:1070px; }
+.d5{ top:1260px; }
+
+/* Sidebar */
+
+.sidebar{
+    width:280px;
+    background:linear-gradient(to bottom,#f3f8fd,#e4edf6);
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+.sidebar h2{
+    text-align:center;
+}
+
+.drag{
+    padding:18px;
+    margin:25px 0;
+    border-radius:18px;
+    font-weight:bold;
+    cursor:grab;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.drag:nth-child(2){
+    background:#d8f0ce;
+}
+
+.drag:nth-child(3){
+    background:#ffd8d5;
+}
+
+.drag:nth-child(4){
+    background:#ffe0be;
+}
+
+.drag:nth-child(5){
+    background:#dbe8ff;
+}
+
+.drag:nth-child(6){
+    background:#fff0b9;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:15px;
+    margin-right:10px;
+    cursor:pointer;
+    color:white;
+    font-size:1rem;
+}
+
+.check{
+    background:#3f9b55;
+}
+
+.reset{
+    background:#24456a;
+}
+
+.feedback{
+    margin-top:20px;
+    font-size:1.2rem;
+    font-weight:bold;
+}
+
+.correct{
+    color:#2e8b57;
+}
+
+.wrong{
+    color:#c0392b;
+}
+
+.info{
+    width:900px;
+    margin:30px auto;
+    background:linear-gradient(to right,#edf5fb,#e0eaf4);
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+</style>
+</head>
+<body>
+
+<h1>Abschnitte der Wirbelsäule</h1>
+
+<div class="subtitle">
+Klicke die Abschnitte der Wirbelsäule an und ordne die Begriffe per Drag & Drop zu.
+</div>
+
+<div class="main">
+
+<div class="sheet">
+
+<div class="spine-container">
+
+<img src="wirbelsaeule.png" class="spine-image">
+
+<div class="zone zone1" data-correct="blue"></div>
+<div class="zone zone2" data-correct="red"></div>
+<div class="zone zone3" data-correct="yellow"></div>
+<div class="zone zone4" data-correct="green"></div>
+<div class="zone zone5" data-correct="orange"></div>
+
+<div class="line l1"></div>
+<div class="line l2"></div>
+<div class="line l3"></div>
+<div class="line l4"></div>
+<div class="line l5"></div>
+
+<div class="dropzone d1"></div>
+<div class="dropzone d2"></div>
+<div class="dropzone d3"></div>
+<div class="dropzone d4"></div>
+<div class="dropzone d5"></div>
+
+</div>
+
+<button class="check" onclick="checkAnswers()">
+Überprüfen
+</button>
+
+<button class="reset" onclick="resetAll()">
+Zurücksetzen
+</button>
+
+<div class="feedback" id="feedback"></div>
+
+</div>
+
+<div class="sidebar">
+
+<h2>Begriffe</h2>
+
+<div class="drag" draggable="true">Kreuzbein</div>
+<div class="drag" draggable="true">Brustwirbelsäule</div>
+<div class="drag" draggable="true">Steißbein</div>
+<div class="drag" draggable="true">Halswirbelsäule</div>
+<div class="drag" draggable="true">Lendenwirbelsäule</div>
+
+</div>
+
+</div>
+
+<div class="info">
+<h2>Hinweis</h2>
+Die Wirbelsäule besteht aus verschiedenen Abschnitten.
+</div>
+
+<script>
+
+/* feste Farben */
+
+const colors=[
+"#4b91ff",
+"#ff6961",
+"#f6c945",
+"#85c76f",
+"#ff9d3f"
+];
+
+document.querySelectorAll(".zone")
+.forEach((zone,index)=>{
+
+    zone.addEventListener("click",()=>{
+
+        zone.style.background=
+        colors[index];
+
+        zone.dataset.selected=
+        zone.dataset.correct;
+
+    });
+
+});
+
+/* Drag & Drop */
+
+document.querySelectorAll(".drag")
+.forEach(item=>{
+
+    item.addEventListener("dragstart",e=>{
+
+        e.dataTransfer.setData(
+            "text",
+            item.innerText
+        );
+
+    });
+
+});
+
+document.querySelectorAll(".dropzone")
+.forEach(drop=>{
+
+    drop.addEventListener("dragover",e=>{
+        e.preventDefault();
+    });
+
+    drop.addEventListener("drop",e=>{
+
+        e.preventDefault();
+
+        const text=
+        e.dataTransfer.getData("text");
+
+        drop.innerHTML=text;
+        drop.dataset.value=text;
+
+    });
+
+});
+
+/* Kontrolle */
+
+function checkAnswers(){
+
+    let correct=true;
+
+    document.querySelectorAll(".zone")
+    .forEach(z=>{
+
+        if(
+        z.dataset.selected
+        !==
+        z.dataset.correct
+        ){
+            correct=false;
+        }
+
+    });
+
+    const solution=[
+        "Halswirbelsäule",
+        "Brustwirbelsäule",
+        "Lendenwirbelsäule",
+        "Kreuzbein",
+        "Steißbein"
+    ];
+
+    document.querySelectorAll(".dropzone")
+    .forEach((d,i)=>{
+
+        if(
+        d.dataset.value
+        !==
+        solution[i]
+        ){
+            correct=false;
+        }
+
+    });
+
+    const feedback=
+    document.getElementById(
+        "feedback"
+    );
+
+    if(correct){
+
+        feedback.innerHTML=
+        "✅ Super! Alles ist richtig.";
+
+        feedback.className=
+        "feedback correct";
+
+    }else{
+
+        feedback.innerHTML=
+        "❌ Überprüfe deine Zuordnungen.";
+
+        feedback.className=
+        "feedback wrong";
+    }
+}
+
+/* Reset */
+
+function resetAll(){
+
+    document.querySelectorAll(".zone")
+    .forEach(z=>{
+
+        z.style.background=
+        "transparent";
+
+        z.dataset.selected=
+        "";
+
+    });
+
+    document.querySelectorAll(".dropzone")
+    .forEach(d=>{
+
+        d.innerHTML="";
+        d.dataset.value="";
+    });
+
+    document.getElementById(
+        "feedback"
+    ).innerHTML="";
+}
+
+</script>
+
+</body>
+</html>
